@@ -33,6 +33,19 @@ import LineChart from './Charts/LineChart'
 import PieChart from './Charts/PieChart'
 
 export default {
+  data() {
+    return {
+      area: 'global'
+    }
+  },
+  computed: {
+    dataPath() {
+      if (this.area === 'global'){
+        return 'pronto'
+      }
+      return 'não tá pronto'
+    }
+  },
   components: {
     Panel,
     Card,
