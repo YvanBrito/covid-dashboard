@@ -46,7 +46,7 @@ export default {
             var y = d3.scaleLinear()
                 .rangeRound([height, 0]);
 
-            d3.tsv("./morley.tsv").then(function (data) {
+            d3.tsv("./data/morley.tsv").then(function (data) {
                 console.log(data)
                 x.domain(data.map(function (d) {
                         return d.Run;

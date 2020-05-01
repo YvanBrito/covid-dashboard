@@ -55,7 +55,7 @@ export default {
                     "translate(" + margin.left + "," + margin.top + ")");
 
             // Get the data
-            d3.csv("./data.csv").then(function(data) {
+            d3.csv("./data/data.csv").then(function(data) {
                 console.log(data)
                 // format the data
                 data.forEach(function(d) {
