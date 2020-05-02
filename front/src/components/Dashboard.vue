@@ -2,23 +2,28 @@
   <div class="dashboard">
     <Panel/>
     <Card
-        title="Mortes por dia">
-      <BarChart
-        :name='"mortespordia1"'
-        :width='600'
-        :height='300'/>
-    </Card>
-    <Card
         title="Casos novos por data de confirmação">
       <LineChart
-        :name='"mortespordia2"'
+        :name='"mortespordia1"'
+        :dataPath='area'
         :width='600'
         :height='300'/>
     </Card>
     <Card
+        v-if='area!=="brasil"'
+        title="Mortes por dia">
+      <BarChart
+        :name='"mortespordia2"'
+        :dataPath='area'
+        :width='600'
+        :height='300'/>
+    </Card>
+    <Card
+        v-if='area==="brasil"'
         title="Nº de casos por região">
       <PieChart
         :name='"mortespordia3"'
+        :dataPath='area'
         :width='600'
         :height='300'/>
     </Card>
@@ -33,25 +38,18 @@ import LineChart from './Charts/LineChart'
 import PieChart from './Charts/PieChart'
 
 export default {
-  data() {
-    return {
-      area: 'global'
-    }
-  },
-  computed: {
-    dataPath() {
-      if (this.area === 'global'){
-        return 'pronto'
-      }
-      return 'não tá pronto'
-    }
-  },
   components: {
     Panel,
     Card,
     BarChart,
     LineChart,
     PieChart
+  },
+  props: {
+    area: {
+      type: String,
+      required: true
+    }
   }
 }
 </script>

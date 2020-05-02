@@ -1,17 +1,22 @@
 <template>
   <div class="menu">
     <ul>
-      <li><a class="active" href="#home">Mundo</a></li>
-      <li><a href="#news">Brasil</a></li>
-      <li><a href="#contact">Pará</a></li>
-      <li><a href="#about">Sobre</a></li>
+      <li><a @click='selectArea("global")'>Mundo</a></li>
+      <li><a @click='selectArea("brasil")'>Brasil</a></li>
+      <li><a @click='selectArea("para")'>Pará</a></li>
+      <li><a>Sobre</a></li>
     </ul>
   </div>
 </template>
 
 <script>
 export default {
-
+  name: 'NavBar',
+  methods: {
+    selectArea(area){
+      this.$emit('areaSelected', area)
+    }
+  }
 }
 </script>
 

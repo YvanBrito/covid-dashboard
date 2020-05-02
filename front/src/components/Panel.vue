@@ -14,9 +14,18 @@
 
 <script>
 import Card from './Card'
+
 export default {
+  name: 'Panel',
   components: {
     Card
+  },
+  data() {
+    return {
+      confirmed: 0,
+      deaths: 0,
+      letality: 0
+    }
   }
 }
 </script>

@@ -1,16 +1,27 @@
 <template>
-  <div>
-    <svg :id="name"></svg>
+  <div :style="{height: height+'px'}">
+    <div v-if='loading' class="lds-ripple">
+        <div>
+        </div>
+        <div>
+        </div>
+    </div>
+    <svg :id="name" width=0 height=0></svg>
   </div>
 </template>
 
 <script>
-import * as d3 from "d3";
+import * as d3 from "d3"
+import api from '@/api'
 
 export default {
     name: 'LineChart',
     props: {
         name: {
+            type: String,
+            required: true
+        },
+        dataPath: {
             type: String,
             required: true
         },
@@ -23,65 +34,87 @@ export default {
             default: 200
         }
     },
-    mounted() {
-        this.setChart()
+    data() {
+        return {
+            loading: false,
+            data: {}
+        }
     },
-    methods: {
-        setChart() {
-            var margin = {top: 20, right: 20, bottom: 50, left: 70},
+    watch: {
+        dataPath() {
+            let svg = d3.select(`#${this.name}`)
+                .attr("width", 0)
+                .attr("height", 0)
+            svg.html("");
+            this.getData()
+        },
+        data() {
+            let margin = {top: 20, right: 20, bottom: 50, left: 70},
                 width = this.width - margin.left - margin.right,
                 height = this.height - margin.top - margin.bottom;
 
             // parse the date / time
-            var parseTime = d3.timeParse("%d-%b-%y");
+            let parseTime = d3.timeParse("%d-%b-%y");
 
             // set the ranges
-            var x = d3.scaleTime().range([0, width]);
-            var y = d3.scaleLinear().range([height, 0]);
+            let x = d3.scaleTime().range([0, width]);
+            let y = d3.scaleLinear().range([height, 0]);
 
             // define the line
-            var valueline = d3.line()
+            let valueline = d3.line()
                 .x(function(d) { return x(d.date); })
                 .y(function(d) { return y(d.close); });
 
             // append the svg obgect to the body of the page
             // appends a 'group' element to 'svg'
             // moves the 'group' element to the top left margin
-            var svg = d3.select(`#${this.name}`)
+            let svg = d3.select(`#${this.name}`)
                 .attr("width", width + margin.left + margin.right)
                 .attr("height", height + margin.top + margin.bottom)
             .append("g")
                 .attr("transform",
                     "translate(" + margin.left + "," + margin.top + ")");
-
-            // Get the data
-            d3.csv("./data/data.csv").then(function(data) {
-                // format the data
-                data.forEach(function(d) {
-                    d.date = parseTime(d.date);
-                    d.close = +d.close;
-                });
-
-                // Scale the range of the data
-                x.domain(d3.extent(data, function(d) { return d.date; }));
-                y.domain([0, d3.max(data, function(d) { return d.close; })]);
-
-                // Add the valueline path.
-                svg.append("path")
-                    .data([data])
-                    .attr("class", "line")
-                    .attr("d", valueline);
-
-                // Add the x Axis
-                svg.append("g")
-                    .attr("transform", "translate(0," + height + ")")
-                    .call(d3.axisBottom(x));
-
-                // Add the y Axis
-                svg.append("g")
-                    .call(d3.axisLeft(y));
-
+            
+            // format the data
+            this.data.forEach(function(d) {
+                d.date = parseTime(d.date);
+                d.close = +d.close;
             });
+
+            // Scale the range of the data
+            x.domain(d3.extent(this.data, function(d) { return d.date; }));
+            y.domain([0, d3.max(this.data, function(d) { return d.close; })]);
+
+            // Add the valueline path.
+            svg.append("path")
+                .data([this.data])
+                .attr("class", "line")
+                .attr("d", valueline);
+
+            // Add the x Axis
+            svg.append("g")
+                .attr("transform", "translate(0," + height + ")")
+                .call(d3.axisBottom(x));
+
+            // Add the y Axis
+            svg.append("g")
+                .call(d3.axisLeft(y));
+        }
+    },
+    mounted() {
+        this.getData()
+    },
+    beforeDestroy() {
+        this.data = {}
+    },
+    methods: {
+        getData(){
+            this.loading = true
+            api.get('/hello')
+            .then(response => {
+                this.data = JSON.parse(response.data)
+                this.loading = false
+            })
         }
     }
 }
@@ -93,4 +126,40 @@ export default {
   stroke: steelblue;
   stroke-width: 2px;
 }
+
+.lds-ripple {
+  display: inline-block;
+  position: relative;
+  left: 45%;
+  top: 30%;
+  width: 80px;
+  height: 80px;
+}
+.lds-ripple div {
+  position: absolute;
+  border: 4px solid #56a1c7;
+  opacity: 1;
+  border-radius: 50%;
+  animation: lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+}
+.lds-ripple div:nth-child(2) {
+  animation-delay: -0.5s;
+}
+@keyframes lds-ripple {
+  0% {
+    top: 36px;
+    left: 36px;
+    width: 0;
+    height: 0;
+    opacity: 1;
+  }
+  100% {
+    top: 0px;
+    left: 0px;
+    width: 72px;
+    height: 72px;
+    opacity: 0;
+  }
+}
+
 </style>

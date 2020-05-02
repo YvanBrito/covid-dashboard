@@ -14,6 +14,10 @@ export default {
             type: String,
             required: true
         },
+        dataPath: {
+            type: String,
+            required: true
+        },
         width: {
             type: Number,
             default: 200
