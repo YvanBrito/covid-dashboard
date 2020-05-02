@@ -119,7 +119,7 @@ export default {
             this.loading = true
             api.get('/hello2')
             .then(response => {
-                this.data = JSON.parse(response.data)
+                this.data = response.data
                 this.loading = false
             })
         }
