@@ -54,7 +54,7 @@ export default {
                 height = this.height - margin.top - margin.bottom;
 
             // parse the date / time
-            let parseTime = d3.timeParse("%d-%b-%y");
+            let parseTime = d3.timeParse("%m/%d/%y");
 
             // set the ranges
             let x = d3.scaleTime().range([0, width]);
@@ -63,7 +63,7 @@ export default {
             // define the line
             let valueline = d3.line()
                 .x(function(d) { return x(d.date); })
-                .y(function(d) { return y(d.close); });
+                .y(function(d) { return y(d.confirmed); });
 
             // append the svg obgect to the body of the page
             // appends a 'group' element to 'svg'
@@ -78,12 +78,12 @@ export default {
             // format the data
             this.data.forEach(function(d) {
                 d.date = parseTime(d.date);
-                d.close = +d.close;
+                d.confirmed = +d.confirmed;
             });
 
             // Scale the range of the data
             x.domain(d3.extent(this.data, function(d) { return d.date; }));
-            y.domain([0, d3.max(this.data, function(d) { return d.close; })]);
+            y.domain([0, d3.max(this.data, function(d) { return d.confirmed; })]);
 
             // Add the valueline path.
             svg.append("path")
@@ -110,7 +110,7 @@ export default {
     methods: {
         getData(){
             this.loading = true
-            api.get('/hello')
+            api.get('/global/confirmed/')
             .then(response => {
                 this.data = response.data
                 this.loading = false

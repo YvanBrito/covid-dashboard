@@ -2,7 +2,7 @@
   <div class="dashboard">
     <Panel/>
     <Card
-        title="Casos novos por data de confirmação">
+        title="Casos confirmados">
       <LineChart
         :name='"mortespordia1"'
         :dataPath='area'
@@ -56,7 +56,8 @@ export default {
 
 <style>
 .dashboard {
-  border: 3px solid red;
+  border: 1px solid rgba(98, 182, 255, 0.8);
+  border-radius: 8px;
   padding: 10px;
   margin-bottom: 10px;
   margin-top: 70px;

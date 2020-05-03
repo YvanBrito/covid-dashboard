@@ -10,6 +10,7 @@ import NavBar from './components/NavBar.vue'
 import Dashboard from './components/Dashboard.vue'
 
 // https://covid.saude.gov.br/
+// https://github.com/CSSEGISandData/COVID-19
 export default {
   name: 'App',
   components: {

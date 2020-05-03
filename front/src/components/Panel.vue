@@ -32,7 +32,8 @@ export default {
 
 <style>
 .panel {
-    border: 3px solid green;
+    border: 1px solid rgba(59, 230, 158, 0.8);
+    border-radius: 8px;
     display: flex;
     justify-content: space-around;
     margin-bottom: 50px;
