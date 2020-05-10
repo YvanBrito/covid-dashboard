@@ -1,8 +1,17 @@
 <template>
-  <div class="canvas">
+  <v-app>
     <NavBar @areaSelected='changeArea'/>
-    <Dashboard :area='area'/>
-  </div>
+
+    <v-content>
+      <Dashboard :area="area"/>
+    </v-content>
+    <v-footer
+      color="indigo"
+      app
+    >
+      <span class="white--text">&copy; 2020</span>
+    </v-footer>
+  </v-app>
 </template>
 
 <script>
@@ -11,15 +20,21 @@ import Dashboard from './components/Dashboard.vue'
 
 // https://covid.saude.gov.br/
 // https://github.com/CSSEGISandData/COVID-19
+// https://github.com/tookit/vue-material-admin
+
+// https://materialdesignicons.com/
 export default {
   name: 'App',
   components: {
     NavBar,
     Dashboard
   },
+  props: {
+    source: String,
+  },
   data() {
     return{
-      area: 'global'
+      area: 'global',
     }
   },
   methods: {

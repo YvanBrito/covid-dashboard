@@ -1,10 +1,45 @@
 <template>
-  <div class="card">
-    <div class="container">
-      <p>{{ title }}</p> 
-    </div>
-    <slot></slot>
-  </div>
+  <v-card>
+    <v-toolbar
+      color="primary"
+      dark
+      flat
+    >
+      <v-toolbar-title>{{ title }}</v-toolbar-title>
+      <v-spacer />
+      <v-tooltip bottom>
+        <template v-slot:activator="{ on }">
+          <v-btn
+            :href="source"
+            icon
+            large
+            target="_blank"
+            v-on="on"
+          >
+            <v-icon>mdi-cog-outline</v-icon>
+          </v-btn>
+        </template>
+        <span>Source</span>
+      </v-tooltip>
+      <v-tooltip bottom>
+        <template v-slot:activator="{ on }">
+          <v-btn
+            :href="source"
+            icon
+            large
+            target="_blank"
+            v-on="on"
+          >
+            <v-icon>mdi-refresh</v-icon>
+          </v-btn>
+        </template>
+        <span>Refresh</span>
+      </v-tooltip>
+    </v-toolbar>
+    <v-card-text>
+      <slot></slot>
+    </v-card-text>
+  </v-card>
 </template>
 
 <script>

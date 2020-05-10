@@ -1,12 +1,12 @@
 <template>
-  <div :style="{height: height+'px'}">
+  <div>
     <div v-if='loading' class="lds-ripple">
         <div>
         </div>
         <div>
         </div>
     </div>
-    <svg :id="name" width=0 height=0></svg>
+    <div :id="name"></div>
   </div>
 </template>
 
@@ -25,11 +25,7 @@ export default {
             type: String,
             required: true
         },
-        width: {
-            type: Number,
-            default: 200
-        },
-        height: {
+        heightInitial: {
             type: Number,
             default: 200
         }
@@ -37,19 +33,52 @@ export default {
     data() {
         return {
             loading: true,
-            data: {}
+            width: 0,
+            height: 0,
+            data: []
         }
     },
     watch: {
         dataPath() {
-            let svg = d3.select(`#${this.name}`)
-                .attr("width", 0)
-                .attr("height", 0)
+            let svg = d3.select(`#${this.name}`).append('svg')
             svg.html("");
             this.getData()
         },
         data(){
-            let svg = d3.select(`#${this.name}`),
+            this.setChart()
+        }
+    },
+    created(){
+        this.height = this.heightInitial
+    },
+    mounted() {
+        this.width = parseFloat(d3.select(`#${this.name}`).style('width'))
+        this.getData()
+        this.$nextTick(() => {
+            window.addEventListener('resize', () => {
+                this.width = 100
+                this.setChart()
+                this.width = Math.min(parseFloat(d3.select(`#${this.name}`).style('width')), 700)
+                this.setChart()
+                })
+        })
+    },
+    beforeDestroy() {
+        this.data = []
+    },
+    methods: {
+        getData(){
+            this.loading = true
+            d3.select(`#${this.name}`).html("");
+            api.get('/hello2/')
+            .then(response => {
+                this.loading = false
+                this.data = response.data
+            })
+        },
+        setChart() {
+            d3.select(`#${this.name}`).html("");
+            let svg = d3.select(`#${this.name}`).append('svg'),
             margin = {
                 top: 20,
                 right: 20,
@@ -70,7 +99,7 @@ export default {
 
             let y = d3.scaleLinear()
                 .rangeRound([height, 0]);
-            
+
             x.domain(this.data.map(function (d) {
                     return d.Run;
                 }));
@@ -106,22 +135,6 @@ export default {
             .attr("height", function (d) {
                 return height - y(Number(d.Speed));
             });
-        }
-    },
-    mounted() {
-        this.getData()
-    },
-    beforeDestroy() {
-        this.data = {}
-    },
-    methods: {
-        getData(){
-            this.loading = true
-            api.get('/hello2')
-            .then(response => {
-                this.data = response.data
-                this.loading = false
-            })
         }
     }
 }

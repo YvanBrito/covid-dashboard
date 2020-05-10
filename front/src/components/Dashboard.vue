@@ -1,49 +1,58 @@
 <template>
-  <div class="dashboard">
-    <Panel/>
-    <Card
-        title="Casos confirmados">
-      <LineChart
-        :name='"mortespordia1"'
-        :dataPath='area'
-        :width='600'
-        :height='300'/>
-    </Card>
-    <Card
-        v-if='area!=="brasil"'
-        title="Mortes por dia">
-      <BarChart
-        :name='"mortespordia2"'
-        :dataPath='area'
-        :width='600'
-        :height='300'/>
-    </Card>
-    <Card
-        v-if='area==="brasil"'
-        title="Nº de casos por região">
-      <PieChart
-        :name='"mortespordia3"'
-        :dataPath='area'
-        :width='600'
-        :height='300'/>
-    </Card>
-  </div>
+  <v-container
+    class="fill-height"
+    fluid
+  >
+    <v-row>
+      <v-col>
+        <Card
+          :title="'Número de Casos'">
+          <LineChart
+              :name='"mortespordia1"'
+              :dataPath='area'
+              :heightInitial='300'/>
+        </Card>
+      </v-col>
+      <v-col>
+        <Card
+          :title="'Nº de casos por região'">
+          <BarChart
+              :name='"mortespordia2"'
+              :dataPath='area'
+              :heightInitial='300'/>
+        </Card>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col>
+        <Card :title="'Nº de casos por região'">
+        </Card>
+      </v-col>
+      <v-col>
+        <Card :title="'Nº de casos por região'">
+        </Card>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
-import Panel from './Panel'
+// import Panel from './Panel'
 import Card from './Card'
-import BarChart from './Charts/BarChart'
 import LineChart from './Charts/LineChart'
-import PieChart from './Charts/PieChart'
+// import PieChart from './Charts/PieChart'
+import BarChart from './Charts/BarChart'
+// import MapaMundi from './Charts/MapaMundi'
+
 
 export default {
   components: {
-    Panel,
+    // Panel,
     Card,
-    BarChart,
     LineChart,
-    PieChart
+    // PieChart,
+    BarChart,
+    // MapaMundi
   },
   props: {
     area: {
@@ -61,7 +70,7 @@ export default {
   padding: 10px;
   margin-bottom: 10px;
   margin-top: 70px;
-  width: 60%;
+  width: 90%;
   position: absolute;
   left: 50%;
   -ms-transform: translate(-50%, 0%);

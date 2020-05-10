@@ -9,7 +9,9 @@ router = routers.DefaultRouter()
 # Additionally, we include login URLs for the browsable API.
 urlpatterns = [
     path('', include(router.urls)),
-    path('global/confirmed/', views.globalConfirmed, name='confirmed'),
+    path('global/', views.globalCases, name='cases'),
+    path('brasil/', views.globalCases, name='cases'),
+    path('para/', views.globalCases, name='cases'),
     path('hello2/', views.hellodois, name='hello2'),
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))

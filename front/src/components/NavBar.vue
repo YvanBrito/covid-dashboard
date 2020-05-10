@@ -1,17 +1,55 @@
 <template>
-  <div class="menu">
-    <ul>
-      <li><a @click='selectArea("global")'>Mundo</a></li>
-      <li><a @click='selectArea("brasil")'>Brasil</a></li>
-      <li><a @click='selectArea("para")'>Pará</a></li>
-      <li><a>Sobre</a></li>
-    </ul>
-  </div>
+  <nav>
+    <v-navigation-drawer
+      v-model="drawer"
+      app
+    >
+      <v-list dense>
+        <v-list-item link @click='selectArea("global")'>
+          <v-list-item-action>
+            <v-icon>mdi-home</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>Mundo</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item link @click='selectArea("brasil")'>
+          <v-list-item-action>
+            <v-icon>mdi-home</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>Brasil</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item link @click='selectArea("para")'>
+          <v-list-item-action>
+            <v-icon>mdi-contact-mail</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>Para</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
+    <v-app-bar
+      app
+      color="indigo"
+      dark
+    >
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
+      <v-toolbar-title>Application</v-toolbar-title>
+    </v-app-bar>
+  </nav>
 </template>
 
 <script>
 export default {
   name: 'NavBar',
+  data() {
+    return {
+      drawer: false
+    }
+  },
   methods: {
     selectArea(area){
       this.$emit('areaSelected', area)
@@ -21,46 +59,4 @@ export default {
 </script>
 
 <style>
-.menu {
-  position: fixed;
-  background-color: #fff;
-  width: 100%;
-  top: 0;
-  left: 0px;
-  margin: 0;
-  padding: 0;
-  z-index: 1;
-  border: 1px solid rgba(219, 233, 245, 0.8);
-}
-
-ul {
-  list-style-type: none;
-  margin: 0 0 0 20%;
-  padding: 0;
-  overflow: hidden;
-}
-
-li {
-  float: left;
-}
-
-li:last-child {
-  border-right: none;
-}
-
-li a {
-  display: block;
-  color: #555;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-}
-
-li a:hover:not(.active) {
-  background-color: #111;
-}
-
-.active {
-  background-color: #4CAF50;
-}
 </style>
