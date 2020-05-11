@@ -37,7 +37,7 @@
       dark
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-toolbar-title>Application</v-toolbar-title>
+      <v-toolbar-title style="cursor: pointer" @click="teste()">Yvan Brito</v-toolbar-title>
     </v-app-bar>
   </nav>
 </template>
@@ -53,10 +53,17 @@ export default {
   methods: {
     selectArea(area){
       this.$emit('areaSelected', area)
+    },
+    teste() {
+      location.href='http://yvanbrito.com.br'
     }
   }
 }
 </script>
 
 <style>
+.home-link{
+  text-decoration: none;
+  color: white;
+}
 </style>

@@ -10,7 +10,6 @@
       <v-tooltip bottom>
         <template v-slot:activator="{ on }">
           <v-btn
-            :href="source"
             icon
             large
             target="_blank"
@@ -24,7 +23,6 @@
       <v-tooltip bottom>
         <template v-slot:activator="{ on }">
           <v-btn
-            :href="source"
             icon
             large
             target="_blank"

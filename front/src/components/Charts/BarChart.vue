@@ -58,7 +58,7 @@ export default {
             window.addEventListener('resize', () => {
                 this.width = 100
                 this.setChart()
-                this.width = Math.min(parseFloat(d3.select(`#${this.name}`).style('width')), 700)
+                this.width = parseFloat(d3.select(`#${this.name}`).style('width'))
                 this.setChart()
                 })
         })

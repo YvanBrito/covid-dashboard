@@ -3,23 +3,105 @@
     class="fill-height"
     fluid
   >
+    <v-flex lg3 sm6 xs12>
+      <v-card 
+        color="#385F73"
+        dark>
+        <v-card-text>
+          <div class="d-flex justify-space-between">
+            <div>
+              <p class="display-1 text--primary">
+                168953
+              </p>
+              <div class="text--primary">
+                Casos confirmados
+              </div>
+            </div>
+          </div>
+        </v-card-text>
+      </v-card>
+    </v-flex>
+    <v-flex lg3 sm6 xs12>
+      <v-card 
+        color="#385F73"
+        dark>
+        <v-card-text>
+          <div class="d-flex justify-space-between">
+            <div>
+              <p class="display-1 text--primary">
+                168953
+              </p>
+              <div class="text--primary">
+                Casos confirmados
+              </div>
+            </div>
+          </div>
+        </v-card-text>
+      </v-card>
+    </v-flex>
+    <v-flex lg3 sm6 xs12>
+      <v-card 
+        color="#385F73"
+        dark>
+        <v-card-text>
+          <div class="d-flex justify-space-between">
+            <div>
+              <p class="display-1 text--primary">
+                168953
+              </p>
+              <div class="text--primary">
+                Casos confirmados
+              </div>
+            </div>
+          </div>
+        </v-card-text>
+      </v-card>
+    </v-flex>
+    <v-flex lg3 sm6 xs12>
+      <v-card 
+        color="#385F73"
+        dark>
+        <v-card-text>
+          <div class="d-flex justify-space-between">
+            <div>
+              <p class="display-1 text--primary">
+                168953
+              </p>
+              <div class="text--primary">
+                Casos confirmados
+              </div>
+            </div>
+          </div>
+        </v-card-text>
+      </v-card>
+    </v-flex>
+    <v-flex lg6 sm12 xs12>
+      <Card
+        :title="'Número de Casos'">
+        <LineChart
+            :name='"mortespordia1"'
+            :dataPath='area'
+            :heightInitial='300'/>
+      </Card>
+    </v-flex>
+    <v-flex lg6 sm12 xs12>
+      <Card
+        :title="'Número de Casos'">
+        <BarChart
+            :name='"mortespordia2"'
+            :dataPath='area'
+            :heightInitial='300'/>
+      </Card>
+    </v-flex>
     <v-row>
       <v-col>
         <Card
           :title="'Número de Casos'">
-          <LineChart
-              :name='"mortespordia1"'
-              :dataPath='area'
-              :heightInitial='300'/>
         </Card>
       </v-col>
       <v-col>
         <Card
           :title="'Nº de casos por região'">
-          <BarChart
-              :name='"mortespordia2"'
-              :dataPath='area'
-              :heightInitial='300'/>
         </Card>
       </v-col>
     </v-row>
