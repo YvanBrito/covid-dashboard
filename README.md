@@ -12,7 +12,7 @@ pip install -r requirements.txt
 
 ```
 
-### Run project
+### Run project from back folder
 ```
 python manage.py runserver
 ```
