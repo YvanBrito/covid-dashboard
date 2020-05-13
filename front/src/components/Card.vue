@@ -1,8 +1,6 @@
 <template>
-  <v-card>
+  <v-card outlined>
     <v-toolbar
-      color="primary"
-      dark
       flat
     >
       <v-toolbar-title>{{ title }}</v-toolbar-title>

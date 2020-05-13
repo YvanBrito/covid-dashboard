@@ -7,9 +7,9 @@
     </v-content>
     <v-footer
       color="indigo"
-      app
     >
-      <span class="white--text">&copy; 2020</span>
+      <v-spacer></v-spacer>
+      <span class="white--text">&copy; {{ new Date().getFullYear() }}</span>
     </v-footer>
   </v-app>
 </template>

@@ -35,6 +35,7 @@
       app
       color="indigo"
       dark
+      hide-on-scroll
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-toolbar-title style="cursor: pointer" @click="teste()">Yvan Brito</v-toolbar-title>
