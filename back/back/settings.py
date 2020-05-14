@@ -28,6 +28,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     '192.168.15.10',
     '127.0.0.1',
+    '8000-dot-12247838-dot-devshell.appspot.com',
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True
