@@ -1,12 +1,14 @@
 <template>
-  <div>
+  <div :style="{height: height+'px'}">
     <div v-if='loading' class="lds-ripple">
         <div>
         </div>
         <div>
         </div>
     </div>
-    <div :id="name"></div>
+    <transition name="fade">
+        <div v-show="!loading" :id="name"></div>
+    </transition>
   </div>
 </template>
 
@@ -43,16 +45,12 @@ export default {
             let svg = d3.select(`#${this.name}`).append('svg')
             svg.html("");
             this.getData()
-        },
-        data(){
-            this.setChart()
         }
     },
     created(){
         this.height = this.heightInitial
     },
     mounted() {
-        this.width = parseFloat(d3.select(`#${this.name}`).style('width'))
         this.getData()
         this.$nextTick(() => {
             window.addEventListener('resize', () => {
@@ -63,12 +61,15 @@ export default {
                 })
         })
     },
+    updated() {
+        this.width = parseFloat(d3.select(`#${this.name}`).style('width'))
+        this.setChart()
+    },
     beforeDestroy() {
         this.data = []
     },
     methods: {
         getData(){
-            this.loading = true
             d3.select(`#${this.name}`).html("");
             api.get('/hello2/')
             .then(response => {

@@ -3,83 +3,18 @@
     class="fill-height"
     fluid
   >
-    <v-row>
-      <v-col>
-        <v-card>
-          <v-card-text>
-            <div class="d-flex justify-space-between">
-              <div>
-                <p class="display-1 text--primary">
-                  168953
-                </p>
-                <div class="text--primary">
-                  Casos confirmados
-                </div>
-              </div>
-            </div>
-          </v-card-text>
-        </v-card>
-      </v-col>
-      <v-col>
-        <v-card>
-          <v-card-text>
-            <div class="d-flex justify-space-between">
-              <div>
-                <p class="display-1 text--primary">
-                  168953
-                </p>
-                <div class="text--primary">
-                  Casos confirmados
-                </div>
-              </div>
-            </div>
-          </v-card-text>
-        </v-card>
-      </v-col>
-      <v-col>
-        <v-card>
-          <v-card-text>
-            <div class="d-flex justify-space-between">
-              <div>
-                <p class="display-1 text--primary">
-                  168953
-                </p>
-                <div class="text--primary">
-                  Casos confirmados
-                </div>
-              </div>
-            </div>
-          </v-card-text>
-        </v-card>
-      </v-col>
-      <v-col>
-        <v-card>
-          <v-card-text>
-            <div class="d-flex justify-space-between">
-              <div>
-                <p class="display-1 text--primary">
-                  168953
-                </p>
-                <div class="text--primary">
-                  Casos confirmados
-                </div>
-              </div>
-            </div>
-          </v-card-text>
-        </v-card>
-      </v-col>
-    </v-row>
+    <Panel :area="area"/>
     <v-row>
       <v-col 
         :lg="8"
         :md="8"
         :sm="12">
         <Card
-        :title="'Número de Casos'">
+          :title="'Número de Casos'">
         <LineChart
-            :name='"mortespordia1"'
-            :dataPath='area'
-            :heightInitial='300'/>
+          :name='"mortespordia1"'
+          :dataPath='area'
+          :heightInitial='300'/>
       </Card>
       </v-col>
       <v-col
@@ -115,7 +50,7 @@
 </template>
 
 <script>
-// import Panel from './Panel'
+import Panel from './Panel'
 import Card from './Card'
 import LineChart from './Charts/LineChart'
 // import PieChart from './Charts/PieChart'
@@ -125,7 +60,7 @@ import BarChart from './Charts/BarChart'
 
 export default {
   components: {
-    // Panel,
+    Panel,
     Card,
     LineChart,
     // PieChart,

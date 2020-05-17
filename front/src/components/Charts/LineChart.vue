@@ -6,7 +6,9 @@
         <div>
         </div>
     </div>
-    <div :id="name"></div>
+    <transition name="fade">
+        <div v-show="!loading" :id="name"></div>
+    </transition>
   </div>
 </template>
 
@@ -32,7 +34,7 @@ export default {
     },
     data() {
         return {
-            loading: false,
+            loading: true,
             width: 0,
             height: 0,
             data: {}
@@ -45,25 +47,12 @@ export default {
                 .attr("height", 0)
             svg.html("");
             this.getData()
-        },
-        data() {
-            // parse the date / time
-            let parseTime = d3.timeParse("%m/%d/%y");
-            // format the data
-            this.data.forEach(function(d) {
-                d.date = parseTime(d.date);
-                d.confirmed = +d.confirmed;
-                d.deaths = +d.deaths;
-                d.recovered = +d.recovered;
-            });
-            this.setChart()
         }
     },
     created(){
         this.height = this.heightInitial
     },
     mounted() {
-        this.width = parseFloat(d3.select(`#${this.name}`).style('width'))
         this.getData()
         this.$nextTick(() => {
             window.addEventListener('resize', () => {
@@ -74,6 +63,10 @@ export default {
             })
         })
     },
+    updated() {
+        this.width = parseFloat(d3.select(`#${this.name}`).style('width'))
+        this.setChart()
+    },
     beforeDestroy() {
         this.data = {}
     },
@@ -82,10 +75,20 @@ export default {
             this.loading = true
             d3.select(`#${this.name}`).html("");
             api.get(`/${this.dataPath}/`)
-            .then(response => {
-                this.loading = false
-                this.data = response.data
-            })
+                .then(response => {
+                    this.loading = false
+                    this.data = response.data
+                    
+                    // parse the date / time
+                    let parseTime = d3.timeParse("%m/%d/%y");
+                    // format the data
+                    this.data.forEach(function(d) {
+                        d.date = parseTime(d.date);
+                        d.confirmed = +d.confirmed;
+                        d.deaths = +d.deaths;
+                        d.recovered = +d.recovered;
+                    });
+                })
         },
         setChart() {
             d3.select(`#${this.name}`).html("");
@@ -146,12 +149,15 @@ export default {
             // Add the x Axis
             svg.append("g")
                 .attr("transform", "translate(0," + height + ")")
-                .call(d3.axisBottom(x));
+                .call(d3.axisBottom(x))
+                .selectAll("text")
+                    .attr("transform", "translate(-10,10)rotate(-45)")
+                    .style("text-anchor", "end");
 
             svg.append("text")             
                 .attr("transform",
                         "translate(" + (width/2) + " ," + 
-                                    (height + margin.top + 20) + ")")
+                                    (height + margin.top + 30) + ")")
                 .style("text-anchor", "middle")
                 .text("Data");
 
@@ -191,10 +197,10 @@ export default {
 
 <style>
 /* Fade Animation */
-.fade-enter, .fade-leave-to {
+.fade-enter {
     opacity: 0;
 }
-.fade-enter-active, .fade-leave-active {
+.fade-enter-active {
     transition: opacity 1s;
 }
 

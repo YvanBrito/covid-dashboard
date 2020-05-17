@@ -1,41 +1,125 @@
 <template>
-  <div class="panel">
-    <Card title='Confirmados'>
-      19.490
-    </Card>
-    <Card title='Óbitos'>
-      5.239
-    </Card>
-    <Card title='Letalidade'>
-      6,5%
-    </Card>
-  </div>
+  <v-row>
+    <v-col>
+      <Card 
+        title='Confirmados' 
+        :enableToolbar='false' 
+        :isLoading="isLoading">
+        <div v-if='isLoading' class="text--primary">
+          Loading
+        </div>
+        <div v-else class="d-flex justify-space-between">
+          <div>
+            <p class="display-1 text--primary">
+              {{ confirmed }}
+            </p>
+            <div class="text--primary">
+              Confirmados
+            </div>
+          </div>
+        </div>
+      </Card>
+    </v-col>
+    <v-col>
+      <Card title='Óbitos' :enableToolbar='false' :isLoading="isLoading">
+        <div v-if='isLoading' class="text--primary">
+          Loading
+        </div>
+        <div v-else class="d-flex justify-space-between">
+          <div>
+            <p class="display-1 text--primary">
+              {{ deaths }}
+            </p>
+            <div class="text--primary">
+              Óbitos
+            </div>
+          </div>
+        </div>
+      </Card>
+    </v-col>
+    <v-col>
+      <Card title='Recuperados' :enableToolbar='false' :isLoading="isLoading">
+        <div v-if='isLoading' class="text--primary">
+          Loading
+        </div>
+        <div v-else class="d-flex justify-space-between">
+          <div>
+            <p class="display-1 text--primary">
+              {{ recovered }}
+            </p>
+            <div class="text--primary">
+              Recuperados
+            </div>
+          </div>
+        </div>
+      </Card>
+    </v-col>
+    <v-col>
+      <Card title='Letalidade' :enableToolbar='false' :isLoading="isLoading">
+        <div v-if='isLoading' class="text--primary">
+          Loading
+        </div>
+        <div v-else class="d-flex justify-space-between">
+          <div>
+            <p class="display-1 text--primary">
+              {{ letality }}
+            </p>
+            <div class="text--primary">
+              Taxa de Letalidade
+            </div>
+          </div>
+        </div>
+      </Card>
+    </v-col>
+  </v-row>
 </template>
 
 <script>
 import Card from './Card'
+import api from '@/api'
 
 export default {
   name: 'Panel',
   components: {
     Card
   },
+  props: {
+    area: {
+      type: String,
+      required: true
+    }
+  },
   data() {
     return {
       confirmed: 0,
       deaths: 0,
-      letality: 0
+      recovered: 0,
+      letality: 0,
+      isLoading: true
+    }
+  },
+  created() {
+    this.getData()
+  },
+  watch: {
+    area() {
+      this.getData()
+    }
+  },
+  methods: {
+    getData() {
+      this.isLoading = true
+      api.get(`/${this.area}/`)
+        .then(response => {
+          this.isLoading = false
+          this.confirmed = response.data[response.data.length-1].confirmed
+          this.deaths = response.data[response.data.length-1].deaths
+          this.recovered = response.data[response.data.length-1].recovered
+        })
     }
   }
 }
 </script>
 
 <style>
-.panel {
-    border: 1px solid rgba(59, 230, 158, 0.8);
-    border-radius: 8px;
-    display: flex;
-    justify-content: space-around;
-    margin-bottom: 50px;
-}
 </style>

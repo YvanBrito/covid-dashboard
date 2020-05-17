@@ -25,11 +25,7 @@ SECRET_KEY = '%0q#b4_)hd(+%m7y_y!t=k5qh9$g#p^^15bua$+r%^c_n@a*oi'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [
-    '192.168.15.10',
-    '127.0.0.1',
-    '8000-dot-12247838-dot-devshell.appspot.com',
-]
+ALLOWED_HOSTS = ['*']
 
 CORS_ORIGIN_ALLOW_ALL = True
 

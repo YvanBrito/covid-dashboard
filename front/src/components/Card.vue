@@ -1,7 +1,8 @@
 <template>
-  <v-card outlined>
+  <v-card :loading="isLoading" outlined>
     <v-toolbar
       flat
+      v-if="enableToolbar"
     >
       <v-toolbar-title>{{ title }}</v-toolbar-title>
       <v-spacer />
@@ -9,9 +10,9 @@
         <template v-slot:activator="{ on }">
           <v-btn
             icon
-            large
             target="_blank"
             v-on="on"
+            disabled
           >
             <v-icon>mdi-cog-outline</v-icon>
           </v-btn>
@@ -25,6 +26,7 @@
             large
             target="_blank"
             v-on="on"
+            @click="con"
           >
             <v-icon>mdi-refresh</v-icon>
           </v-btn>
@@ -45,6 +47,19 @@ export default {
     title: {
       type: String,
       required: true
+    },
+    enableToolbar: {
+      type: Boolean,
+      default: true
+    },
+    isLoading: {
+      type: Boolean,
+      default: false
+    }
+  },
+  methods: {
+    con() {
+      console.log("estude")
     }
   }
 }
