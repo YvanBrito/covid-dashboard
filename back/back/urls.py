@@ -14,6 +14,7 @@ urlpatterns = [
     path('brasil/', views.brasilCases, name='brasilCases'),
     path('para/', views.globalCases, name='cases'),
     path('hello2/', views.hellodois, name='hello2'),
+    path('worldregions', views.worldregions, name='worldregions'),
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('', TemplateView.as_view(template_name='resume/index.html')),

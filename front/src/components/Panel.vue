@@ -115,6 +115,7 @@ export default {
           this.confirmed = response.data[response.data.length-1].confirmed
           this.deaths = response.data[response.data.length-1].deaths
           this.recovered = response.data[response.data.length-1].recovered
+          this.letality = (this.deaths/this.confirmed)*100
         })
     }
   }

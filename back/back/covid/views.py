@@ -1,5 +1,5 @@
 from django.http import JsonResponse
-import json, time
+import json, time, urllib.request
 import pandas as pd
 
 # https://github.com/CSSEGISandData/COVID-19
@@ -38,7 +38,7 @@ def brasilCases(request):
     dataConfirmed = dataConfirmed.loc[dataConfirmed["Country/Region"] == "Brazil"]
     dataConfirmed = dataConfirmed.drop(columns=['Province/State', 'Country/Region', 'Lat', 'Long'])
     dataConfirmed = dataConfirmed.sum(axis=0)
-
+    
     #Death cases
     url = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv"
     dataDeaths = pd.read_csv(url)
@@ -56,6 +56,42 @@ def brasilCases(request):
     #-------------------------
     d = {'date': dataConfirmed.index.tolist(), 'confirmed': dataConfirmed.values.tolist(), 'deaths': dataDeaths.values.tolist(), 'recovered': dataRecovered.values.tolist()}
     data = pd.DataFrame(data=d)
+
+    resp = json.loads(data.to_json(orient='records'))
+    return JsonResponse(resp, safe=False)
+
+def worldregions(request):
+    # Confirmed cases
+    url = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv"
+    dataConfirmed = pd.read_csv(url)
+    dataConfirmed = dataConfirmed.drop(columns=['Province/State','Lat', 'Long'])
+    col = dataConfirmed['Country/Region']
+    col = col.to_numpy()
+    col = list(dict.fromkeys(col))
+
+    data = []
+    for c in col:
+        d = dataConfirmed.loc[dataConfirmed["Country/Region"] == c]
+        d = d.drop(columns=['Country/Region']).sum(axis=0)
+        if (c == 'Diamond Princess'):
+            continue
+        if (c == 'Czechia'):
+            c = 'Czech'
+        if (c == 'Korea, South'):
+            c = 'Korea (Republic of)'
+        if (c == 'Taiwan*'):
+            c = 'Taiwan'
+        
+        try:
+            response = urllib.request.urlopen('https://restcountries.eu/rest/v2/name/' + c.replace(" ", "%20"))
+        except:
+            response = urllib.request.urlopen('https://restcountries.eu/rest/v2/name/' + c.split(" ", 1)[0])
+        countryInfo = json.loads(response.read())
+        d = d.values.tolist()
+        country = {'Region': countryInfo[0]['region'], 'Country': c, 'data': d[len(d)-1]}
+        data.append(country)
+    
+    data = pd.DataFrame(data=data)
 
     resp = json.loads(data.to_json(orient='records'))
     return JsonResponse(resp, safe=False)

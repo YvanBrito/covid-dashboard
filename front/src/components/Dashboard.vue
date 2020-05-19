@@ -4,6 +4,7 @@
     fluid
   >
     <Panel :area="area"/>
+    
     <v-row>
       <v-col 
         :lg="8"

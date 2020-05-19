@@ -5,6 +5,7 @@
     <v-content>
       <Dashboard :area="area"/>
     </v-content>
+
     <v-footer
       color="indigo"
     >
