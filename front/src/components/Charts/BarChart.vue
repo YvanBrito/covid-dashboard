@@ -71,7 +71,7 @@ export default {
     methods: {
         getData(){
             d3.select(`#${this.name}`).html("");
-            api.get('/hello2/')
+            api.get('/toptenconfirmed')
             .then(response => {
                 this.loading = false
                 this.data = response.data
@@ -102,10 +102,10 @@ export default {
                 .rangeRound([height, 0]);
 
             x.domain(this.data.map(function (d) {
-                    return d.Run;
+                    return d.Country;
                 }));
             y.domain([0, d3.max(this.data, function (d) {
-                        return Number(d.Speed);
+                        return Number(d.value);
                     })]);
 
             g.append("g")
@@ -127,14 +127,14 @@ export default {
             .enter().append("rect")
             .attr("class", "bar")
             .attr("x", function (d) {
-                return x(d.Run);
+                return x(d.Country);
             })
             .attr("y", function (d) {
-                return y(Number(d.Speed));
+                return y(Number(d.value));
             })
             .attr("width", x.bandwidth())
             .attr("height", function (d) {
-                return height - y(Number(d.Speed));
+                return height - y(Number(d.value));
             });
         }
     }

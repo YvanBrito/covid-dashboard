@@ -22,7 +22,11 @@
         :lg="4"
         :md="4"
         :sm="12">
-        <Card :title="'Nº de casos por região'">
+        <Card :title="'Nº de casos por continente'">
+          <HorizontalBarChart
+              :name='"mortespordia3"'
+              :dataPath='area'
+              :heightInitial='300'/>
         </Card>
       </v-col>
     </v-row>
@@ -54,7 +58,7 @@
 import Panel from './Panel'
 import Card from './Card'
 import LineChart from './Charts/LineChart'
-// import PieChart from './Charts/PieChart'
+import HorizontalBarChart from './Charts/HorizontalBarChart'
 import BarChart from './Charts/BarChart'
 // import MapaMundi from './Charts/MapaMundi'
 
@@ -64,7 +68,7 @@ export default {
     Panel,
     Card,
     LineChart,
-    // PieChart,
+    HorizontalBarChart,
     BarChart,
     // MapaMundi
   },
