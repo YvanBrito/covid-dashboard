@@ -36,7 +36,7 @@
         :md="6"
         :sm="12">
         <Card
-          :title="'Número de Casos'">
+          :title="'Top 10 número de Casos'">
           <BarChart
               :name='"mortespordia2"'
               :dataPath='area'

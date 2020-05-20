@@ -62,7 +62,7 @@
         <div v-else class="d-flex justify-space-between">
           <div>
             <p class="display-1 text--primary">
-              {{ letality }}
+              {{ letality }}%
             </p>
             <div class="text--primary">
               Taxa de Letalidade
@@ -109,13 +109,13 @@ export default {
   methods: {
     getData() {
       this.isLoading = true
-      api.get(`/${this.area}/`)
+      api.get(`/${this.area}`)
         .then(response => {
           this.isLoading = false
           this.confirmed = response.data[response.data.length-1].confirmed
           this.deaths = response.data[response.data.length-1].deaths
           this.recovered = response.data[response.data.length-1].recovered
-          this.letality = (this.deaths/this.confirmed)*100
+          this.letality = Math.round(((this.deaths/this.confirmed)*100 + Number.EPSILON) * 100) / 100
         })
     }
   }

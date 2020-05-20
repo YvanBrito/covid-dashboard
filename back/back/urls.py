@@ -10,15 +10,14 @@ router = routers.DefaultRouter()
 # path('', include(router.urls)),
 
 urlpatterns = [
-    path('global/', views.globalCases, name='cases'),
-    path('brasil/', views.brasilCases, name='brasilCases'),
-    path('para/', views.globalCases, name='cases'),
-    path('hello2/', views.hellodois, name='hello2'),
+    path('global', views.globalCases, name='cases'),
+    path('brasil', views.brasilCases, name='brasilCases'),
+    path('para', views.globalCases, name='cases'),
     path('worldregions', views.worldregions, name='worldregions'),
     path('toptenconfirmed', views.toptenconfirmed, name='toptenconfirmed'),
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('', TemplateView.as_view(template_name='resume/index.html')),
-    path('coviddashboard', TemplateView.as_view(template_name='covid/index.html')),
+    path('coviddashboard', TemplateView.as_view(template_name='covid/dist/index.html')),
     path('blog', TemplateView.as_view(template_name='blog/index.html')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
