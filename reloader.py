@@ -155,5 +155,4 @@ while True:
     with open('data.json', 'w', encoding='utf-8') as f:
         json.dump(jsonToReturn, f, ensure_ascii=False, indent=4)
 
-    print('.')
-    time.sleep(10)
+    time.sleep(86400)

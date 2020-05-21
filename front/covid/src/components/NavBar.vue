@@ -38,25 +38,43 @@
       hide-on-scroll
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-toolbar-title style="cursor: pointer" @click="teste()">Yvan Brito</v-toolbar-title>
+      <v-toolbar-title style="cursor: pointer" @click="teste()">
+        Yvan Brito
+      </v-toolbar-title>
+      <v-spacer></v-spacer>
+      Atualizado em: {{ updateDate }} às {{ updateTime }}
     </v-app-bar>
   </nav>
 </template>
 
 <script>
+import api from '@/api'
+
 export default {
   name: 'NavBar',
   data() {
     return {
-      drawer: false
+      drawer: false,
+      updateDate: '',
+      updateTime: ''
     }
+  },
+  created() {
+    api.get('/updateDate')
+    .then(response => {
+      this.updateDate = response.data.split(' ')[0]
+      this.updateDate = this.updateDate.split('-')[2] + '-' + this.updateDate.split('-')[1] + '-' + this.updateDate.split('-')[0]
+
+      this.updateTime = response.data.split(' ')[1]
+      this.updateTime = this.updateTime.split(':')[0] + ':' + this.updateTime.split(':')[1]
+    })
   },
   methods: {
     selectArea(area){
       this.$emit('areaSelected', area)
     },
     teste() {
-      location.href='http://yvanbrito.com.br'
+      location.href='http://yvanbrito.com'
     }
   }
 }

@@ -34,3 +34,10 @@ def worldregions(request):
 
     resp = json.loads(data)
     return JsonResponse(resp['worldregions'], safe=False)
+
+def updateDate(request):
+    with open(os.path.join(BASE_DIR, '../../data.json'), 'r') as myfile:
+        data=myfile.read()
+
+    resp = json.loads(data)
+    return JsonResponse(resp['updateTime'], safe=False)

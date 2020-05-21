@@ -11,7 +11,7 @@
         <div v-else class="d-flex justify-space-between">
           <div>
             <p class="display-1 text--primary">
-              {{ confirmed }}
+              {{ confirmed | formatNumber }}
             </p>
             <div class="text--primary">
               Confirmados
@@ -28,7 +28,7 @@
         <div v-else class="d-flex justify-space-between">
           <div>
             <p class="display-1 text--primary">
-              {{ deaths }}
+              {{ deaths | formatNumber }}
             </p>
             <div class="text--primary">
               Óbitos
@@ -45,7 +45,7 @@
         <div v-else class="d-flex justify-space-between">
           <div>
             <p class="display-1 text--primary">
-              {{ recovered }}
+              {{ recovered | formatNumber }}
             </p>
             <div class="text--primary">
               Recuperados
@@ -62,7 +62,7 @@
         <div v-else class="d-flex justify-space-between">
           <div>
             <p class="display-1 text--primary">
-              {{ letality }}%
+              {{ letality | formatNumber }}%
             </p>
             <div class="text--primary">
               Taxa de Letalidade
@@ -104,6 +104,11 @@ export default {
   watch: {
     area() {
       this.getData()
+    }
+  },
+  filters: {
+    formatNumber(num) {
+      return num.toString().replace('.', ',').replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')
     }
   },
   methods: {
