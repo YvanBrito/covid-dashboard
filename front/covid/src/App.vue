@@ -20,6 +20,7 @@ import NavBar from './components/NavBar.vue'
 import Dashboard from './components/Dashboard.vue'
 
 // https://covid.saude.gov.br/
+// https://www.covid-19.pa.gov.br/
 // https://github.com/CSSEGISandData/COVID-19
 // https://github.com/tookit/vue-material-admin
 
